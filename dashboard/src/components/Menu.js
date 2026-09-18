@@ -9,9 +9,9 @@ const Menu = () => {
 
   const [cookies, removeCookie] = useCookies(["token"]);
 
-console.log("TOKEN IN MENU:", cookies.token);
-
   const navigate = useNavigate();
+
+  console.log("TOKEN IN MENU:", cookies.token);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);

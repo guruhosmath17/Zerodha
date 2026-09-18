@@ -17,9 +17,9 @@ const Menu = () => {
     setSelectedMenu(index);
   };
 
- const handleLogout = async () => {
+const handleLogout = async () => {
   try {
-    const { data } = await axios.post(
+    await axios.post(
       "https://zerodha-backend-go5a.onrender.com/logout",
       {},
       {
@@ -27,13 +27,9 @@ const Menu = () => {
       }
     );
 
-    if (data.success) {
-      removeCookie("token");
-      navigate("/login");
-    }
+    navigate("/login");
   } catch (error) {
     console.log("Logout error:", error);
-    removeCookie("token");
     navigate("/login");
   }
 };
@@ -170,32 +166,16 @@ const Menu = () => {
         <hr />
 
         {/* Authentication */}
-        <div className="auth-menu">
+       <div className="auth-menu">
 
-          {cookies.token ? (
-            <button
-              className="logout-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="login-btn"
-              >
-                Login
-              </Link>
+  <button
+    className="logout-btn"
+    onClick={handleLogout}
+  >
+    Logout
+  </button>
 
-              <Link
-                to="/signup"
-                className="signup-btn"
-              >
-                Signup
-              </Link>
-            </>
-          )}
+
 
         </div>
 

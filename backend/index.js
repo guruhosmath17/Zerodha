@@ -1,0 +1,98 @@
+require("dotenv").config();
+
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
+const authRoute = require("./routes/AuthRoute");
+
+const { HoldingsModel } = require("./model/HoldingsModel");
+const { PositionsModel } = require("./model/PositionsModel");
+const { OrdersModel } = require("./model/OrdersModel");
+const { userVerification } = require("./Middelwares/AuthMiddleware");
+const app = express();
+
+const PORT = process.env.PORT || 3002;
+const uri = process.env.MONGO_URL;
+
+// ==================== MIDDLEWARE ====================
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+// ==================== AUTH ROUTES ====================
+
+app.use("/", authRoute);
+
+// ==================== HOLDINGS ====================
+
+app.get("/allHoldings", userVerification, async (req, res) => {
+  try {
+    const allHoldings = await HoldingsModel.find({});
+    res.json(allHoldings);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching holdings" });
+  }
+});
+
+// ==================== POSITIONS ====================
+
+app.get("/allPositions", userVerification, async (req, res) => {
+  try {
+    const allPositions = await PositionsModel.find({});
+    res.json(allPositions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching positions" });
+  }
+});
+
+// ==================== NEW ORDER ====================
+
+app.post("/newOrder",userVerification, async (req, res) => {
+  try {
+    const newOrder = new OrdersModel({
+      name: req.body.name,
+      qty: req.body.qty,
+      price: req.body.price,
+      mode: req.body.mode,
+    });
+
+    await newOrder.save();
+
+    res.send("Order saved!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Order could not be saved",
+    });
+  }
+});
+
+// ==================== MONGODB ====================
+
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("DB started!");
+  })
+  .catch((err) => {
+    console.log("MongoDB connection error:", err);
+  });
+
+// ==================== SERVER ====================
+
+app.listen(PORT, () => {
+  console.log(`App started on port ${PORT}`);
+});
+
+console.log("TOKEN_KEY exists:", !!process.env.TOKEN_KEY);

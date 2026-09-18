@@ -20,7 +20,7 @@ const Menu = () => {
   const handleLogout = async () => {
     try {
       const { data } = await axios.post(
-        "https://zerodha-backend-go5a.onrender.com.",
+        "https://zerodha-backend-go5a.onrender.com/logout",
         {},
         {
           withCredentials: true,

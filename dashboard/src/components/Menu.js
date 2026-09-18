@@ -7,7 +7,9 @@ import "./UserHome"
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
 
-  const [cookies] = useCookies(["token"]);
+  const [cookies, removeCookie] = useCookies(["token"]);
+
+console.log("TOKEN IN MENU:", cookies.token);
 
   const navigate = useNavigate();
 

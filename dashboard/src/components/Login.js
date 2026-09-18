@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3002/login",
+        "https://zerodha-backend-go5a.onrender.com/login",
         {
           email,
           password,

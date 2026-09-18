@@ -30,7 +30,7 @@ const Signup = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3002/signup",
+        "https://zerodha-backend-go5a.onrender.com/signup",
         inputValue,
         {
           withCredentials: true,

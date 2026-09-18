@@ -9,7 +9,7 @@ const Holdings = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allHoldings", {
+      .get("https://zerodha-backend-go5a.onrender.com", {
         withCredentials: true,
       })
       .then((res) => {

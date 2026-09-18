@@ -17,23 +17,26 @@ const Menu = () => {
     setSelectedMenu(index);
   };
 
-  const handleLogout = async () => {
-    try {
-      const { data } = await axios.post(
-        "https://zerodha-backend-go5a.onrender.com/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (data.success) {
-        navigate("/login");
+ const handleLogout = async () => {
+  try {
+    const { data } = await axios.post(
+      "https://zerodha-backend-go5a.onrender.com/logout",
+      {},
+      {
+        withCredentials: true,
       }
-    } catch (error) {
-      console.log("Logout error:", error);
+    );
+
+    if (data.success) {
+      removeCookie("token");
+      navigate("/login");
     }
-  };
+  } catch (error) {
+    console.log("Logout error:", error);
+    removeCookie("token");
+    navigate("/login");
+  }
+};
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";

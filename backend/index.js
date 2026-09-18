@@ -91,7 +91,7 @@ mongoose
 
 // ==================== SERVER ====================
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`App started on port ${PORT}`);
 });
 

@@ -4,7 +4,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-
 const UserHome = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(["token"]);
@@ -19,7 +18,7 @@ const UserHome = () => {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:3002/",
+          "https://zerodha-backend-go5a.onrender.com/",
           {},
           {
             withCredentials: true,
@@ -48,11 +47,25 @@ const UserHome = () => {
     verifyCookie();
   }, [cookies.token, navigate, removeCookie]);
 
-  const Logout = () => {
+  const Logout = async () => {
+  try {
+    await axios.post(
+      "https://zerodha-backend-go5a.onrender.com/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
     removeCookie("token");
     navigate("/login");
-  };
+  } catch (error) {
+    console.error("Logout error:", error);
 
+    removeCookie("token");
+    navigate("/login");
+  }
+};
   return (
     <>
       <div className="home_page">

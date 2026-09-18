@@ -20,7 +20,7 @@ const uri = process.env.MONGO_URL;
 
 app.use(
   cors({
-    origin: "https://zerodha-dashboard-2pes.onrender.com/",
+    origin: "https://zerodha-dashboard-2pes.onrender.com",
     credentials: true,
   })
 );

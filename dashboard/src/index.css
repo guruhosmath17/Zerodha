@@ -257,6 +257,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 0;
 }
 
 .logo {
@@ -265,34 +266,42 @@ code {
 }
 
 .menus {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1;
+  min-width: 0;
 }
 
 .menus ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .menus li {
-  display: inline-block;
-  margin-right: 30px;
+  display: block;
+  margin-right: 25px;
+  white-space: nowrap;
+}
+
+.menu-divider {
+  height: 30px;
+  border-left: 1px solid rgb(243, 242, 242);
+  margin: 0 15px;
 }
 
 .auth-menu {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 10px;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .logout-btn {
-  display: block;
   border: none;
   background: #ff5722;
   color: white;
@@ -305,7 +314,6 @@ code {
 .logout-btn:hover {
   background: #e64a19;
 }
-
 .menu {
   font-size: 0.8rem;
   font-weight: 400;
@@ -915,18 +923,4 @@ hr {
 .signup-btn:hover {
   background: #e64a19;
   border-color: #e64a19;
-}
-.logout-btn {
-  border: none;
-  background: #ff5722;
-  color: white;
-  font-size: 14px;
-  padding: 8px 18px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.logout-btn:hover {
-  background: #e64a19;
 }

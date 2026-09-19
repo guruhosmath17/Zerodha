@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import "./UserHome"
 import "./index.css";
 
 const Menu = () => {
@@ -167,14 +166,16 @@ const handleLogout = async () => {
         <hr />
 
         {/* Authentication */}
-      <div className="auth-menu">
-    <button
-      className="logout-btn"
-      onClick={handleLogout}
-    >
-      Logout
-    </button>
-  </div>
+     <span className="menu-divider"></span>
+
+<div className="auth-menu">
+  <button
+    className="logout-btn"
+    onClick={handleLogout}
+  >
+    Logout
+  </button>
+</div>
 
 
       </div>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import "./UserHome"
+import "./index.css";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -166,18 +167,15 @@ const handleLogout = async () => {
         <hr />
 
         {/* Authentication */}
-       <div className="auth-menu">
+      <div className="auth-menu">
+    <button
+      className="logout-btn"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  </div>
 
-  <button
-    className="logout-btn"
-    onClick={handleLogout}
-  >
-    Logout
-  </button>
-
-
-
-        </div>
 
       </div>
     </div>

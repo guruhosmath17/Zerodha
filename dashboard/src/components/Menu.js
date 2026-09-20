@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import "../index.css";
-const [isLoggedIn, setIsLoggedIn] = useState(
-  localStorage.getItem("isLoggedIn") === "true"
-);
+
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -13,6 +11,10 @@ const Menu = () => {
   const [cookies, removeCookie] = useCookies(["token"]);
 
   const navigate = useNavigate();
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);

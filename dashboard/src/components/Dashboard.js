@@ -29,6 +29,7 @@ const Dashboard = () => {
           <Route path="/apps" element={<Apps />} />
           <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+  
         </Routes>
       </div>
     </div>

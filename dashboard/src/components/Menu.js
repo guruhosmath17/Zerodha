@@ -163,7 +163,6 @@ const handleLogout = async () => {
 
         </ul>
 
-        <hr />
 
         {/* Authentication */}
      <span className="menu-divider"></span>

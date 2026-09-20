@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import "../index.css";
+const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+);
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -14,32 +17,24 @@ const Menu = () => {
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
   };
+const handleLogout = async () => {
+  try {
+    await axios.post(
+      "https://zerodha-backend-go5a.onrender.com/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "https://zerodha-backend-go5a.onrender.com/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+  localStorage.removeItem("isLoggedIn");
+  setIsLoggedIn(false);
 
-      removeCookie("token", {
-        path: "/",
-      });
-
-      navigate("/login");
-    } catch (error) {
-      console.log("Logout error:", error);
-
-      removeCookie("token", {
-        path: "/",
-      });
-
-      navigate("/login");
-    }
-  };
+  window.location.href = "/login";
+};
 
   return (
     <div className="menu-container">
@@ -115,27 +110,25 @@ const Menu = () => {
         <span className="menu-divider"></span>
 
         <div className="auth-menu">
+  {isLoggedIn ? (
+    <button
+      className="logout-btn"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  ) : (
+    <>
+      <Link to="/login" className="login-btn">
+        Login
+      </Link>
 
-          {cookies.token ? (
-            <button
-              className="logout-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link to="/login" className="login-btn">
-                Login
-              </Link>
-
-              <Link to="/signup" className="signup-btn">
-                Signup
-              </Link>
-            </>
-          )}
-
-        </div>
+      <Link to="/signup" className="signup-btn">
+        Signup
+      </Link>
+    </>
+  )}
+</div>
 
       </div>
 

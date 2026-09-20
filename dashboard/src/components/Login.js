@@ -42,14 +42,14 @@ const Login = () => {
       console.log("Login response:", data);
 
       if (data.success) {
-        toast.success(data.message);
+  toast.success(data.message);
 
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      } else {
-        toast.error(data.message);
-      }
+  localStorage.setItem("isLoggedIn", "true");
+
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 1000);
+}
 
     } catch (error) {
       console.log("Login error:", error);

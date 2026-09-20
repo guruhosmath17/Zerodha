@@ -27,9 +27,11 @@ const handleLogout = async () => {
       }
     );
 
+    removeCookie("token");
     navigate("/login");
   } catch (error) {
     console.log("Logout error:", error);
+    removeCookie("token");
     navigate("/login");
   }
 };
@@ -168,14 +170,25 @@ const handleLogout = async () => {
      <span className="menu-divider"></span>
 
 <div className="auth-menu">
-  <button
-    className="logout-btn"
-    onClick={handleLogout}
-  >
-    Logout
-  </button>
-</div>
+  {cookies.token ? (
+    <button
+      className="logout-btn"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  ) : (
+    <>
+      <Link to="/login" className="login-btn">
+        Login
+      </Link>
 
+      <Link to="/signup" className="signup-btn">
+        Signup
+      </Link>
+    </>
+  )}
+</div>
 
       </div>
     </div>

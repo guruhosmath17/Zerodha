@@ -296,9 +296,26 @@ code {
 .auth-menu {
   display: flex;
   align-items: center;
-  margin-left: 10px;
-  padding: 0;
-  flex-shrink: 0;
+  gap: 10px;
+  margin-left: 15px;
+}
+
+.login-btn,
+.signup-btn {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.login-btn {
+  border: 1px solid #387ed1;
+  color: #387ed1;
+}
+
+.signup-btn {
+  background: #387ed1;
+  color: white;
 }
 
 .logout-btn {

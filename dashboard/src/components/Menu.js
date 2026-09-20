@@ -11,38 +11,39 @@ const Menu = () => {
 
   const navigate = useNavigate();
 
-  console.log("TOKEN IN MENU:", cookies.token);
-
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
   };
 
-const handleLogout = async () => {
-  try {
-    await axios.post(
-      "https://zerodha-backend-go5a.onrender.com/logout",
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://zerodha-backend-go5a.onrender.com/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
-    removeCookie("token");
-    navigate("/login");
-  } catch (error) {
-    console.log("Logout error:", error);
-    removeCookie("token");
-    navigate("/login");
-  }
-};
+      removeCookie("token", {
+        path: "/",
+      });
 
-  const menuClass = "menu";
-  const activeMenuClass = "menu selected";
+      navigate("/login");
+    } catch (error) {
+      console.log("Logout error:", error);
+
+      removeCookie("token", {
+        path: "/",
+      });
+
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="menu-container">
 
-      {/* Logo */}
       <Link to="/">
         <img
           src="logo.png"
@@ -57,140 +58,87 @@ const handleLogout = async () => {
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/"
               onClick={() => handleMenuClick(0)}
             >
-              <p
-                className={
-                  selectedMenu === 0
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Dashboard
-              </p>
+              Dashboard
             </Link>
           </li>
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/orders"
               onClick={() => handleMenuClick(1)}
             >
-              <p
-                className={
-                  selectedMenu === 1
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Orders
-              </p>
+              Orders
             </Link>
           </li>
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/holdings"
               onClick={() => handleMenuClick(2)}
             >
-              <p
-                className={
-                  selectedMenu === 2
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Holdings
-              </p>
+              Holdings
             </Link>
           </li>
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/positions"
               onClick={() => handleMenuClick(3)}
             >
-              <p
-                className={
-                  selectedMenu === 3
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Positions
-              </p>
+              Positions
             </Link>
           </li>
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/funds"
               onClick={() => handleMenuClick(4)}
             >
-              <p
-                className={
-                  selectedMenu === 4
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Funds
-              </p>
+              Funds
             </Link>
           </li>
 
           <li>
             <Link
-              style={{ textDecoration: "none" }}
               to="/apps"
-              onClick={() => handleMenuClick(6)}
+              onClick={() => handleMenuClick(5)}
             >
-              <p
-                className={
-                  selectedMenu === 6
-                    ? activeMenuClass
-                    : menuClass
-                }
-              >
-                Apps
-              </p>
+              Apps
             </Link>
           </li>
 
         </ul>
 
+        <span className="menu-divider"></span>
 
-        {/* Authentication */}
-     <span className="menu-divider"></span>
+        <div className="auth-menu">
 
-<div className="auth-menu">
-  {cookies.token ? (
-    <button
-      className="logout-btn"
-      onClick={handleLogout}
-    >
-      Logout
-    </button>
-  ) : (
-    <>
-      <Link to="/login" className="login-btn">
-        Login
-      </Link>
+          {cookies.token ? (
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link to="/login" className="login-btn">
+                Login
+              </Link>
 
-      <Link to="/signup" className="signup-btn">
-        Signup
-      </Link>
-    </>
-  )}
-</div>
+              <Link to="/signup" className="signup-btn">
+                Signup
+              </Link>
+            </>
+          )}
+
+        </div>
 
       </div>
+
     </div>
   );
 };

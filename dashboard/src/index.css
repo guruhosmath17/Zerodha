@@ -257,34 +257,26 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 0;
 }
-
 .logo {
   width: 30px;
   height: 20px;
 }
 
 .menus {
-  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  min-width: 0;
+  justify-content: space-evenly;
 }
 
 .menus ul {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style-type: none;
 }
 
 .menus li {
-  display: block;
-  margin-right: 25px;
-  white-space: nowrap;
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: none;
 }
 
 .menu-divider {

@@ -11,7 +11,7 @@ const Menu = () => {
   const [cookies, removeCookie] = useCookies(["token"]);
 
   const navigate = useNavigate();
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(
   localStorage.getItem("isLoggedIn") === "true"
 );
@@ -35,7 +35,7 @@ const handleLogout = async () => {
   localStorage.removeItem("isLoggedIn");
   setIsLoggedIn(false);
 
-  window.location.href = "/login";
+  window.location.href = "/";
 };
 
   return (

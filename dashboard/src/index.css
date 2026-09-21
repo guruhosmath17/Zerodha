@@ -271,6 +271,8 @@ code {
 
 .menus ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .menus li {
@@ -289,25 +291,38 @@ code {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 15px;
-}
-
-.login-btn,
-.signup-btn {
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  font-size: 14px;
+  margin-left: 0;
+  padding: 0;
 }
 
 .login-btn {
-  border: 1px solid #387ed1;
-  color: #387ed1;
+  text-decoration: none;
+  color: #424242;
+  font-size: 14px;
+  padding: 8px 18px;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  background: white;
+}
+
+.login-btn:hover {
+  color: #ff5722;
+  border-color: #ff5722;
 }
 
 .signup-btn {
-  background: #387ed1;
+  text-decoration: none;
   color: white;
+  font-size: 14px;
+  padding: 8px 18px;
+  border-radius: 5px;
+  background: #ff5722;
+  border: 1px solid #ff5722;
+}
+
+.signup-btn:hover {
+  background: #e64a19;
+  border-color: #e64a19;
 }
 
 .logout-btn {
@@ -883,53 +898,4 @@ hr {
 
 .action:hover {
   background-color: rgb(212, 212, 212);
-}
-
-
-/* =========================
-   LOGIN & SIGNUP BUTTONS
-========================= */
-
-.auth-menu {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 20px;
-}
-
-/* Login */
-
-.login-btn {
-  text-decoration: none;
-  color: #424242;
-  font-size: 14px;
-  padding: 8px 18px;
-  border: 1px solid #d6d6d6;
-  border-radius: 5px;
-  background: white;
-  transition: all 0.2s ease;
-}
-
-.login-btn:hover {
-  color: #ff5722;
-  border-color: #ff5722;
-}
-
-/* Signup */
-
-.signup-btn {
-  text-decoration: none;
-  color: white;
-  font-size: 14px;
-  padding: 8px 18px;
-  border-radius: 5px;
-  background: #ff5722;
-  border: 1px solid #ff5722;
-  transition: all 0.2s ease;
-}
-
-.signup-btn:hover {
-  background: #e64a19;
-  border-color: #e64a19;
 }

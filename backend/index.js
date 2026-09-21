@@ -56,9 +56,9 @@ app.get("/allPositions", userVerification, async (req, res) => {
   }
 });
 
-// ==================== NEW ORDER ====================
+// ==================== CREATE NEW ORDER ====================
 
-app.post("/newOrder",userVerification, async (req, res) => {
+app.post("/newOrder", userVerification, async (req, res) => {
   try {
     const newOrder = new OrdersModel({
       name: req.body.name,
@@ -69,11 +69,58 @@ app.post("/newOrder",userVerification, async (req, res) => {
 
     await newOrder.save();
 
-    res.send("Order saved!");
+    res.json({
+      success: true,
+      message: "Order saved successfully",
+    });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
+      success: false,
       message: "Order could not be saved",
+    });
+  }
+});
+
+// ==================== ALL ORDERS ====================
+
+app.get("/allOrders", userVerification, async (req, res) => {
+  try {
+    const allOrders = await OrdersModel.find({});
+    res.json(allOrders);
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Error fetching orders",
+    });
+  }
+});
+
+// ==================== FUNDS ====================
+
+app.get("/funds", userVerification, async (req, res) => {
+  try {
+    res.json({
+      availableMargin: 4043.10,
+      usedMargin: 3757.30,
+      availableCash: 4043.10,
+      openingBalance: 3736.40,
+      payin: 4064.00,
+      span: 0,
+      deliveryMargin: 0,
+      exposure: 0,
+      optionsPremium: 0,
+      collateralLiquid: 0,
+      collateralEquity: 0,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Error fetching funds",
     });
   }
 });

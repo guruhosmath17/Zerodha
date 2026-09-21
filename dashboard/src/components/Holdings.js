@@ -7,23 +7,22 @@ const Holdings = () => {
   const navigate = useNavigate();
   const [allHoldings, setAllHoldings] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("https://zerodha-backend-go5a.onrender.com", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setAllHoldings(res.data);
-      })
-      .catch((error) => {
-        if (error.response?.status === 401) {
-          navigate("/login");
-        } else {
-          console.log("Error fetching holdings:", error);
-        }
-      });
-  }, [navigate]);
-
+ useEffect(() => {
+  axios
+    .get("https://zerodha-backend-go5a.onrender.com/allHoldings", {
+      withCredentials: true,
+    })
+    .then((res) => {
+      setAllHoldings(res.data);
+    })
+    .catch((error) => {
+      if (error.response?.status === 401) {
+        navigate("/login");
+      } else {
+        console.log("Error fetching holdings:", error);
+      }
+    });
+}, [navigate]);
   // Graph labels
   const labels = allHoldings.map((stock) => stock.name);
 

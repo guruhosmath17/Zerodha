@@ -20,7 +20,7 @@ const uri = process.env.MONGO_URL;
 
 app.use(
   cors({
-    origin: "https://zerodha-dashboard-2pes.onrender.com",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -117,9 +117,7 @@ app.get("/funds", userVerification, async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-
     res.status(500).json({
-      success: false,
       message: "Error fetching funds",
     });
   }

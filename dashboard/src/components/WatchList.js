@@ -136,41 +136,76 @@ const WatchListActions = ({ uid }) => {
     generalContext.openBuyWindow(uid);
   };
 
+  const handleSellClick = () => {
+    generalContext.openSellWindow(uid);
+  };
+
   return (
     <span className="actions">
       <span>
+
+        {/* BUY */}
         <Tooltip
           title="Buy (B)"
           placement="top"
           arrow
           TransitionComponent={Grow}
-          onClick={handleBuyClick}
         >
-          <button className="buy">Buy</button>
+          <button
+            className="buy"
+            type="button"
+            onClick={handleBuyClick}
+          >
+            Buy
+          </button>
         </Tooltip>
+
+        {/* SELL */}
         <Tooltip
           title="Sell (S)"
           placement="top"
           arrow
           TransitionComponent={Grow}
         >
-          <button className="sell">Sell</button>
+          <button
+            className="sell"
+            type="button"
+            onClick={handleSellClick}
+          >
+            Sell
+          </button>
         </Tooltip>
+
+        {/* ANALYTICS */}
         <Tooltip
           title="Analytics (A)"
           placement="top"
           arrow
           TransitionComponent={Grow}
         >
-          <button className="action">
+          <button
+            className="action"
+            type="button"
+          >
             <BarChartOutlined className="icon" />
           </button>
         </Tooltip>
-        <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
-          <button className="action">
+
+        {/* MORE */}
+        <Tooltip
+          title="More"
+          placement="top"
+          arrow
+          TransitionComponent={Grow}
+        >
+          <button
+            className="action"
+            type="button"
+          >
             <MoreHoriz className="icon" />
           </button>
         </Tooltip>
+
       </span>
     </span>
   );

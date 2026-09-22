@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
@@ -11,19 +10,33 @@ const BuyActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
 
-  const handleBuyClick = () => {
-    axios.post("https://zerodha-backend-go5a.onrender.com/newOrder", {
-      name: uid,
-      qty: stockQuantity,
-      price: stockPrice,
-      mode: "BUY",
-    });
+  const { closeBuyWindow } = useContext(GeneralContext);
 
-    GeneralContext.closeBuyWindow();
+  const handleBuyClick = async () => {
+    try {
+      const response = await axios.post(
+        "https://zerodha-backend-go5a.onrender.com/newOrder",
+        {
+          name: uid,
+          qty: Number(stockQuantity),
+          price: Number(stockPrice),
+          mode: "BUY",
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log("Buy order response:", response.data);
+
+      closeBuyWindow();
+    } catch (error) {
+      console.error("Error placing buy order:", error);
+    }
   };
 
   const handleCancelClick = () => {
-    GeneralContext.closeBuyWindow();
+    closeBuyWindow();
   };
 
   return (
@@ -32,21 +45,26 @@ const BuyActionWindow = ({ uid }) => {
         <div className="inputs">
           <fieldset>
             <legend>Qty.</legend>
+
             <input
               type="number"
               name="qty"
               id="qty"
+              min="1"
               onChange={(e) => setStockQuantity(e.target.value)}
               value={stockQuantity}
             />
           </fieldset>
+
           <fieldset>
             <legend>Price</legend>
+
             <input
               type="number"
               name="price"
               id="price"
               step="0.05"
+              min="0"
               onChange={(e) => setStockPrice(e.target.value)}
               value={stockPrice}
             />
@@ -56,11 +74,17 @@ const BuyActionWindow = ({ uid }) => {
 
       <div className="buttons">
         <span>Margin required ₹140.65</span>
+
         <div>
           <Link className="btn btn-blue" onClick={handleBuyClick}>
             Buy
           </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+
+          <Link
+            to=""
+            className="btn btn-grey"
+            onClick={handleCancelClick}
+          >
             Cancel
           </Link>
         </div>

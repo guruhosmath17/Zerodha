@@ -6,8 +6,6 @@ module.exports.userVerification = async (req, res, next) => {
   try {
     const token = req.cookies.token;
 
-    console.log("TOKEN RECEIVED:", token);
-
     if (!token) {
       return res.status(401).json({
         status: false,
@@ -25,7 +23,6 @@ module.exports.userVerification = async (req, res, next) => {
         });
       }
 
-      console.log("JWT DATA:", data);
 
       const user = await User.findById(data.id);
 
@@ -36,7 +33,6 @@ module.exports.userVerification = async (req, res, next) => {
         });
       }
 
-      console.log("USER FOUND:", user.username);
 
       req.user = user;
 

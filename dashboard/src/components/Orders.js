@@ -12,13 +12,14 @@ const Orders = () => {
         withCredentials: true,
       })
       .then((res) => {
+        console.log("Orders data:", res.data);
         setOrders(res.data);
       })
       .catch((error) => {
+        console.log("Orders error:", error);
+
         if (error.response?.status === 401) {
           navigate("/login");
-        } else {
-          console.log("Error fetching orders:", error);
         }
       });
   }, [navigate]);
@@ -46,7 +47,7 @@ const Orders = () => {
 
             <tbody>
               {orders.map((order, index) => (
-                <tr key={index}>
+                <tr key={order._id || index}>
                   <td>DELIVERY</td>
                   <td>{order.name}</td>
                   <td>{order.qty}</td>

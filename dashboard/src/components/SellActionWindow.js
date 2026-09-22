@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
@@ -13,17 +12,32 @@ const SellActionWindow = ({ uid }) => {
   const { closeSellWindow } = useContext(GeneralContext);
 
   const handleSellClick = async () => {
+    console.log("SELL BUTTON CLICKED");
+
     try {
-      await axios.post("https://zerodha-backend-go5a.onrender.com/newOrder", {
-        name: uid,
-        qty: Number(stockQuantity),
-        price: Number(stockPrice),
-        mode: "SELL",
-      });
+      const response = await axios.post(
+        "https://zerodha-backend-go5a.onrender.com/newOrder",
+        {
+          name: uid,
+          qty: Number(stockQuantity),
+          price: Number(stockPrice),
+          mode: "SELL",
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log("Sell order response:", response.data);
 
       closeSellWindow();
     } catch (error) {
       console.error("Error placing sell order:", error);
+
+      if (error.response) {
+        console.error("Server response:", error.response.data);
+        console.error("Status:", error.response.status);
+      }
     }
   };
 
@@ -35,6 +49,8 @@ const SellActionWindow = ({ uid }) => {
     <div className="container" id="sell-window" draggable="true">
       <div className="regular-order">
         <div className="inputs">
+
+          {/* Quantity */}
           <fieldset>
             <legend>Qty.</legend>
 
@@ -43,11 +59,12 @@ const SellActionWindow = ({ uid }) => {
               name="qty"
               id="qty"
               min="1"
-              onChange={(e) => setStockQuantity(e.target.value)}
               value={stockQuantity}
+              onChange={(e) => setStockQuantity(e.target.value)}
             />
           </fieldset>
 
+          {/* Price */}
           <fieldset>
             <legend>Price</legend>
 
@@ -57,10 +74,11 @@ const SellActionWindow = ({ uid }) => {
               id="price"
               step="0.05"
               min="0"
-              onChange={(e) => setStockPrice(e.target.value)}
               value={stockPrice}
+              onChange={(e) => setStockPrice(e.target.value)}
             />
           </fieldset>
+
         </div>
       </div>
 
@@ -68,20 +86,23 @@ const SellActionWindow = ({ uid }) => {
         <span>Margin required ₹140.65</span>
 
         <div>
-          <Link
+          {/* SELL BUTTON */}
+          <button
+            type="button"
             className="btn btn-blue"
             onClick={handleSellClick}
           >
             Sell
-          </Link>
+          </button>
 
-          <Link
-            to=""
+          {/* CANCEL BUTTON */}
+          <button
+            type="button"
             className="btn btn-grey"
             onClick={handleCancelClick}
           >
             Cancel
-          </Link>
+          </button>
         </div>
       </div>
     </div>

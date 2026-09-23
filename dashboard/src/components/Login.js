@@ -1,34 +1,54 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-
-import "./Auth.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [inputValue, setInputValue] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { email, password } = inputValue;
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
+    const token = params.get("token");
 
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  };
+    if (token) {
+      axios
+        .post(
+          "https://zerodha-backend-go5a.onrender.com/set-token",
+          {
+            token,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log("Token saved:", response.data);
 
-  const handleSubmit = async (e) => {
+          localStorage.setItem("isLoggedIn", "true");
+
+          // Remove token from URL
+          window.history.replaceState(
+            {},
+            document.title,
+            "/"
+          );
+
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log("Token error:", error);
+        });
+    }
+  }, [navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         "https://zerodha-backend-go5a.onrender.com/login",
         {
           email,
@@ -39,133 +59,54 @@ const Login = () => {
         }
       );
 
-      console.log("Login response:", data);
+      console.log("Login response:", response.data);
 
-      if (data.success) {
-  toast.success(data.message);
+      if (response.data.status) {
+        localStorage.setItem("isLoggedIn", "true");
 
-  localStorage.setItem("isLoggedIn", "true");
-
-  setTimeout(() => {
-    window.location.href = "/";
-  }, 1000);
-}
-
+        navigate("/");
+      }
     } catch (error) {
       console.log("Login error:", error);
 
       if (error.response) {
-        toast.error(
-          error.response.data.message || "Login failed"
-        );
-      } else {
-        toast.error("Cannot connect to backend");
+        alert(error.response.data.message);
       }
     }
-
-    setInputValue({
-      email: "",
-      password: "",
-    });
   };
 
   return (
-    <div className="auth-page">
+    <div className="login-container">
+      <h2>Login</h2>
 
-      <div className="auth-container">
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <div className="auth-card">
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-          {/* Logo */}
-          <div className="auth-logo">
-            <span>Z</span>
-          </div>
+        <button type="submit">
+          Login
+        </button>
+      </form>
 
-          <h2>Log In </h2>
-
-          {/* <p className="auth-subtitle">
-            Login to access your trading account
-          </p> */}
-
-          <form
-            className="auth-form"
-            onSubmit={handleSubmit}
-          >
-
-            {/* Email */}
-            <div className="input-group">
-
-              <label>Email Address</label>
-
-              <div className="input-wrapper">
-
-                <span className="input-icon">
-                  ✉
-                </span>
-
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  placeholder="Enter your email"
-                  onChange={handleOnChange}
-                  required
-                />
-
-              </div>
-
-            </div>
-
-            {/* Password */}
-            <div className="input-group">
-
-              <label>Password</label>
-
-              <div className="input-wrapper">
-
-                <span className="input-icon">
-                  🔒
-                </span>
-
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={handleOnChange}
-                  required
-                />
-
-              </div>
-
-            </div>
-
-            <button
-              type="submit"
-              className="auth-button"
-            >
-              Login
-            </button>
-
-          </form>
-
-          <div className="auth-footer">
-            Don't have an account?{" "}
-            <Link to="/signup">
-              Create Account
-            </Link>
-          </div>
-
-          <div className="auth-security">
-            🔒 Your information is securely protected
-          </div>
-
-        </div>
-
-      </div>
-
-      <ToastContainer />
-
+      <p>
+        Don't have an account?{" "}
+        <Link to="/signup">
+          Create Account
+        </Link>
+      </p>
     </div>
   );
 };

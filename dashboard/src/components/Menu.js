@@ -15,23 +15,22 @@ const Menu = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        "https://zerodha-backend-go5a.onrender.com/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
+  try {
+    await axios.post(
+      "https://zerodha-backend-go5a.onrender.com/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
 
-    localStorage.removeItem("isLoggedIn");
-    removeCookie("token");
+  localStorage.removeItem("isLoggedIn");
 
-    navigate("/login");
-  };
+  navigate("/login");
+};
 
   const menuItems = [
     { name: "Dashboard", path: "/" },

@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://zerodha-abya.onrender.com",
+      "https://zerodha-frontend-hhxy.onrender.com",
       "https://zerodha-dashboard-2pes.onrender.com",
     ],
     credentials: true,
